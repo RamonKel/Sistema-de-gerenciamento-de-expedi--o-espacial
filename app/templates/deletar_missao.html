@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Deletar Missão Espacial</h1>
+    <table>
+      <tr>
+        <th>Nome</th>
+        <th>Destino</th>
+        <th>Estado</th>
+        <th>Ações</th>
+      </tr>
+      {% for missao in missoes %}
+      <tr>
+        <td>{{ missao.nome_missao }}</td>
+        <td>{{ missao.destino }}</td>
+        <td>{{ missao.estado_missao }}</td>
+        <td>
+          <a href="{{ url_for('detalhes_missao', id=missao.id) }}">Detalhes</a>
+          <a href="{{ url_for('editar_missao', id=missao.id) }}">Editar</a>
+          <form
+            action="{{ url_for('deletar_missao', id=missao.id) }}"
+            method="POST"
+            style="display: inline"
+          >
+            <button
+              type="submit"
+              onclick="return confirm('Tem certeza que deseja excluir esta missão?');"
+            >
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

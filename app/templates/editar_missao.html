@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form method="POST">
+      <input
+        type="text"
+        name="nome_missao"
+        value="{{ missao.nome_missao }}"
+        required
+      />
+      <input
+        type="date"
+        name="data_lancamento"
+        value="{{ missao.data_lancamento.strftime('%Y-%m-%d') }}"
+        required
+      />
+      <input type="text" name="destino" value="{{ missao.destino }}" required />
+      <input
+        type="text"
+        name="estado_missao"
+        value="{{ missao.estado_missao }}"
+        required
+      />
+      <input
+        type="text"
+        name="tripulacao"
+        value="{{ missao.tripulacao }}"
+        required
+      />
+      <input
+        type="text"
+        name="carga_util"
+        value="{{ missao.carga_util }}"
+        required
+      />
+      <input
+        type="text"
+        name="duracao_missao"
+        value="{{ missao.duracao_missao }}"
+        required
+      />
+      <input
+        type="number"
+        name="custo_missao"
+        value="{{ missao.custo_missao }}"
+        step="0.01"
+        required
+      />
+      <textarea name="status_missao" required>
+{{ missao.status_missao }}</textarea
+      >
+      <button type="submit">Atualizar Missão</button>
+    </form>
+  </body>
+</html>
