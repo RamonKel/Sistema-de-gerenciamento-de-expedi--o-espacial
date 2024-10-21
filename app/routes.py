@@ -33,17 +33,57 @@ def adicionar_missao():
     db.session.add(nova_missao)
     db.session.commit()
     flash('Missão adicionada com sucesso!')
-    return redirect(url_for('visualizar_missoes'))
+    return redirect(url_for('visualizar_missao'))
   
   return render_template("adicionar_missao.html")
 
-@app.route('/missao', methods=['GET', 'POST'])
-def visualizar_missao():
-  missao = Missoes.query.order_by(Missoes.data_lancamento.desc().all())
-  return render_template('visualizar_missoes.html', missao=missao)
 
-@app.route('/missao/editar/<id:int>', methods=['GET', 'POST'])
-def editar_missao():
-  a = 1
+@app.route('/missao/editar/<int:id>', methods=['GET', 'POST'])
+def editar_missao(id):
+  missao = Missoes.query.get_or_404(id)
+  if request.method == 'POST':
+    missao.nome_missao = request.form['nome_missao']
+    missao.data_lancamento = datetime.strptime(request.form['data_lancamento'], '%Y-%m-%d').date()
+    missao.destino = request.form['destino']
+    missao.estado_missao = request.form['estado_missao']
+    missao.tripulacao = request.form['tripulacao']
+    missao.carga_util = request.form['carga_util']
+    missao.duracao_missao = request.form['duracao_missao']
+    missao.custo_missao = float(request.form['custo_missao'])
+    missao.status_missao = request.form['status_missao']
+    
+    db.session.commit()
+    flash('Missão editada com sucesso!')
+    return redirect(url_for('visualizar_missao'))
   
-      
+  return render_template("editar_missao.html", missao=missao)
+  
+@app.route('/missao/deletar/<int:id>', methods=['GET', 'POST'])
+def deletar_missao(id):
+  missao = Missoes.query.get_or_404(id)
+  db.session.delete(missao)
+  db.session.commit()
+  flash('Missão deletada com sucesso!')
+  return redirect(url_for('visualizar_missao'))
+
+@app.route('/missao', methods=['GET'])
+def visualizar_missao():
+    missoes = Missoes.query.order_by(Missoes.data_lancamento.desc()).all()
+    return render_template('visualizar_missao.html', missoes=missoes)
+
+@app.route('/missao/<int:id>', methods=['GET'])
+def detalhes_missao(id):
+  missao = Missoes.query.get_or_404(id)
+  return render_template('detalhes_missao.html', missao=missao)
+
+@app.route('/missao/pesquisar', methods=['GET'])
+def pesquisar_missao():
+  data_inicial = request.args.get('data_inicial')
+  data_final = request.args.get('data_final')
+  
+  missoes = Missoes.query.filter(
+    Missoes.data_lancamento >= datetime.strptime(data_inicial, '%Y-%m-%d'),
+    Missoes.data_lancamento <= datetime.strptime(data_final, '%Y-%m-%d')
+  ).order_by(Missoes.data_lancamento.desc()).all()
+  
+  return render_template('visualizar_missao.html', missoes=missoes)

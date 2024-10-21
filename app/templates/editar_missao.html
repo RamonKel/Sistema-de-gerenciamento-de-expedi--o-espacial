@@ -4,57 +4,89 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Editar Missão</title>
   </head>
   <body>
-    <form method="POST">
+    <h1>Editar Missão</h1>
+    <form method="POST" action="{{ url_for('editar_missao', id=missao.id) }}">
+      <label for="nome_missao">Nome da Missão</label>
       <input
         type="text"
         name="nome_missao"
+        id="nome_missao"
         value="{{ missao.nome_missao }}"
         required
       />
+
+      <label for="data_lancamento">Data de Lançamento</label>
       <input
         type="date"
         name="data_lancamento"
+        id="data_lancamento"
         value="{{ missao.data_lancamento.strftime('%Y-%m-%d') }}"
         required
       />
-      <input type="text" name="destino" value="{{ missao.destino }}" required />
+
+      <label for="destino">Destino</label>
+      <input
+        type="text"
+        name="destino"
+        id="destino"
+        value="{{ missao.destino }}"
+        required
+      />
+
+      <label for="estado_missao">Estado da Missão</label>
       <input
         type="text"
         name="estado_missao"
+        id="estado_missao"
         value="{{ missao.estado_missao }}"
         required
       />
+
+      <label for="tripulacao">Tripulação</label>
       <input
         type="text"
         name="tripulacao"
+        id="tripulacao"
         value="{{ missao.tripulacao }}"
         required
       />
+
+      <label for="carga_util">Carga Útil</label>
       <input
         type="text"
         name="carga_util"
+        id="carga_util"
         value="{{ missao.carga_util }}"
         required
       />
+
+      <label for="duracao_missao">Duração da Missão</label>
       <input
         type="text"
         name="duracao_missao"
+        id="duracao_missao"
         value="{{ missao.duracao_missao }}"
         required
       />
+
+      <label for="custo_missao">Custo da Missão</label>
       <input
         type="number"
         name="custo_missao"
+        id="custo_missao"
         value="{{ missao.custo_missao }}"
         step="0.01"
         required
       />
-      <textarea name="status_missao" required>
+
+      <label for="status_missao">Status da Missão</label>
+      <textarea name="status_missao" id="status_missao" required>
 {{ missao.status_missao }}</textarea
       >
+
       <button type="submit">Atualizar Missão</button>
     </form>
   </body>

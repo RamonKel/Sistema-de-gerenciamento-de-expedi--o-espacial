@@ -9,7 +9,8 @@
   <body>
     <table>
       <tr>
-        <th>Nome</th>
+        <th>Nome da Missão</th>
+        <th>Data de Lançamento</th>
         <th>Destino</th>
         <th>Estado</th>
         <th>Ações</th>
@@ -17,21 +18,33 @@
       {% for missao in missoes %}
       <tr>
         <td>{{ missao.nome_missao }}</td>
+        <td>{{ missao.data_lancamento.strftime('%Y-%m-%d') }}</td>
         <td>{{ missao.destino }}</td>
         <td>{{ missao.estado_missao }}</td>
         <td>
-          <a href="{{ url_for('detalhes_missao', id=missao.id) }}">Detalhes</a>
           <a href="{{ url_for('editar_missao', id=missao.id) }}">Editar</a>
           <form
             action="{{ url_for('deletar_missao', id=missao.id) }}"
             method="POST"
             style="display: inline"
           >
-            <button type="submit">Excluir</button>
+            <button
+              type="submit"
+              onclick="return confirm('Tem certeza que deseja excluir?');"
+            >
+              Excluir
+            </button>
           </form>
         </td>
       </tr>
       {% endfor %}
+      <form method="GET" action="{{ url_for('pesquisar_missao') }}">
+        <label for="data_inicial">Data Inicial:</label>
+        <input type="date" name="data_inicial" required />
+        <label for="data_final">Data Final:</label>
+        <input type="date" name="data_final" required />
+        <button type="submit">Pesquisar</button>
+      </form>
     </table>
   </body>
 </html>

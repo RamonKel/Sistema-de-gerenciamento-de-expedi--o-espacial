@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Detalhes da Missão</h1>
+    <p><strong>Nome:</strong> {{ missao.nome_missao }}</p>
+    <p><strong>Data de Lançamento:</strong> {{ missao.data_lancamento.strftime('%Y-%m-%d') }}</p>
+    <p><strong>Destino:</strong> {{ missao.destino }}</p>
+    <p><strong>Estado:</strong> {{ missao.estado_missao }}</p>
+    <p><strong>Tripulação:</strong> {{ missao.tripulacao }}</p>
+    <p><strong>Carga Útil:</strong> {{ missao.carga_util }}</p>
+    <p><strong>Duração:</strong> {{ missao.duracao_missao }}</p>
+    <p><strong>Custo:</strong> {{ missao.custo_missao }}</p>
+    <p><strong>Status:</strong> {{ missao.status_missao }}</p>
+    <a href="{{ url_for('visualizar_missao') }}">Voltar</a>
+    </table>
+  </body>
+</html>
