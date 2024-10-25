@@ -1,4 +1,4 @@
-from database import db
+from app.modelos.database import db
 
 class Missoes(db.Model):
   __tablename__="missao"
@@ -23,3 +23,17 @@ class Missoes(db.Model):
     self.duracao_missao = duracao_missao
     self.custo_missao = custo_missao
     self.status_missao = status_missao
+    
+  def to_dict(self):
+    return {
+      'id':self.id,
+      'nome_missao':self.nome_missao,
+      'data_lancamento':self.data_lancamento.isoformat(),
+      'destino':self.destino,
+      'estado_missao':self.estado_missao,
+      'tripulacao':self.tripulacao,
+      'carga_util':self.carga_util,
+      'duracao_missao':self.duracao_missao,
+      'custo_missao':self.custo_missao,
+      'status_missao':self.status_missao
+    }

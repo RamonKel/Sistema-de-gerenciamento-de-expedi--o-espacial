@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_migrate import Migrate
-from database import db
+from app.modelos.database import db
 
 # Inicialize o app
 app = Flask(__name__)

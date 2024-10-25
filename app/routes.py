@@ -1,7 +1,7 @@
 from app import app
-from flask import render_template, request, flash, redirect, url_for
-from database import db
-from app.models import Missoes
+from flask import render_template, request, flash, redirect, url_for, Blueprint, jsonify
+from app.modelos.database import db
+from app.modelos.models import Missoes
 from flask_migrate import Migrate
 from datetime import datetime
 
@@ -38,7 +38,7 @@ def adicionar_missao():
   return render_template("adicionar_missao.html")
 
 
-@app.route('/missao/editar/<int:id>', methods=['GET', 'POST'])
+@app.route('/missao/editar/<int:id>', methods=['PUT', 'POST'])
 def editar_missao(id):
   missao = Missoes.query.get_or_404(id)
   if request.method == 'POST':
@@ -58,7 +58,7 @@ def editar_missao(id):
   
   return render_template("editar_missao.html", missao=missao)
   
-@app.route('/missao/deletar/<int:id>', methods=['GET', 'POST'])
+@app.route('/missao/deletar/<int:id>', methods=['DELETE'])
 def deletar_missao(id):
   missao = Missoes.query.get_or_404(id)
   db.session.delete(missao)
