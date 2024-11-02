@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="../static/styles/style_Visualizar.css" />
+    <link rel="shortcut icon" href="./static/ico.png" type="image/x-icon" />
+    <title>Visualizar missão</title>
   </head>
+
   <body>
     <table>
       <tr>
@@ -23,6 +26,12 @@
         <td>{{ missao.estado_missao }}</td>
         <td>
           <a href="{{ url_for('editar_missao', id=missao.id) }}">Editar</a>
+          <a
+            href="javascript:void(0);"
+            class="detalhes"
+            data-id="{{ missao.id }}"
+            >detalhes</a
+          >
           <form
             action="{{ url_for('deletar_missao', id=missao.id) }}"
             method="POST"
@@ -44,7 +53,27 @@
         <label for="data_final">Data Final:</label>
         <input type="date" name="data_final" required />
         <button type="submit">Pesquisar</button>
+        <a href="{{ url_for('index') }}" class="voltar-button"
+          >Voltar para a página inicial</a
+        >
       </form>
     </table>
+
+    <script>
+      document.querySelectorAll(".detalhes").forEach(function (element) {
+        element.addEventListener("click", function () {
+          const missaoId = this.getAttribute("data-id");
+          abrirDetalhes(missaoId);
+        });
+      });
+
+      function abrirDetalhes(missaoId) {
+        window.open(
+          `/missao/${missaoId}`,
+          "Detalhes da Missão",
+          "width=700,height=600"
+        );
+      }
+    </script>
   </body>
 </html>

@@ -1,0 +1,81 @@
+/* styles_sobre.css */
+
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 20px;
+  color: #fff; /* Cor do texto */
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.8); /* Fundo escuro com transparência */
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  text-align: center; /* Centraliza o texto */
+  position: relative; /* Adicionado para o efeito de desfoque */
+  z-index: 1; /* Para que o container fique acima do fundo */
+}
+
+body::before {
+  content: "";
+  position: fixed; /* Fixa a imagem de fundo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../imagens/espaço2.jpeg"); /* Imagem de fundo */
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px); /* Aplica o efeito de desfoque */
+  z-index: 0; /* Coloca a imagem atrás do conteúdo */
+}
+
+h1 {
+  color: #ffd700; /* Cor dourada para o título */
+  margin-bottom: 20px;
+  font-size: 2.5em;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 15px 0;
+}
+
+.equipe {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os membros se movam para a linha de baixo se não houver espaço */
+  justify-content: center; /* Centraliza os membros */
+  margin-top: 20px;
+}
+
+.membro {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Fundo branco com transparência para destaque */
+  border: 2px solid #ffd700; /* Borda dourada */
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  width: 200px; /* Largura fixa para cada membro */
+  text-align: center; /* Centraliza o texto dentro de cada membro */
+}
+
+.membro img {
+  width: 120px; /* Largura fixa para as imagens */
+  height: 120px; /* Altura fixa para as imagens */
+  border-radius: 50%; /* Faz as imagens ficarem redondas */
+  border: 3px solid #ffd700; /* Borda dourada para as imagens */
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 16px;
+  color: #ccc; /* Cor cinza claro para o rodapé */
+}

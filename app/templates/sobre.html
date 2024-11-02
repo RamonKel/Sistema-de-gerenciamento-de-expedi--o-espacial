@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sobre a Equipe</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/styles_sobre.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Sobre a Equipe</h1>
+      <p>
+        Equipe responsável pelo sistema de gerenciamento de missões espaciais
+      </p>
+
+      <div class="equipe">
+        <div class="membro">
+          <img
+            src="{{ url_for('static', filename='imagens/Ramon.jpeg') }}"
+            alt="Membro 1"
+          />
+          <h2>Ramon Kelvin</h2>
+          <p>Matricula: 202308778773</p>
+        </div>
+        <div class="membro">
+          <img
+            src="{{ url_for('static', filename='imagens/Vinicius.jpeg') }}"
+            alt="Membro 2"
+          />
+          <h2>João Vinicius</h2>
+          <p>Matricula: 202308425005</p>
+        </div>
+        <div class="membro">
+          <img
+            src="{{ url_for('static', filename='imagens/Felipe.jpeg') }}"
+            alt="Membro 3"
+          />
+          <h2>Felipe Fontenele</h2>
+          <p>Matricula: 202308</p>
+        </div>
+        <div class="membro">
+          <img
+            src="{{ url_for('static', filename='imagens/Samuel.jpeg') }}"
+            alt="Membro 4"
+          />
+          <h2>Samuel Silva</h2>
+          <p>Matricula: 202308</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>&copy; 2024 Sistema de Gerenciamento de Missões</p>
+      </div>
+    </div>
+  </body>
+</html>

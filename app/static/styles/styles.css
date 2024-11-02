@@ -1,0 +1,238 @@
+/* ==================== */
+/* Estilos para o corpo e fundo */
+/* ==================== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: "Century Gothic", Arial, sans-serif;
+}
+
+body {
+  background-image: url("/static/fundo1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+/* ==================== */
+/* Estilos para o header */
+/* ==================== */
+header {
+  width: 100%;
+  padding: 2px;
+  background-color: rgb(39, 43, 53);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  font-family: "Century Gothic", Arial, sans-serif;
+}
+
+.logo {
+  flex: 0;
+  margin-left: 20px;
+}
+
+.logo img {
+  width: auto;
+  height: 50px;
+  object-fit: contain;
+  padding-bottom: 10px;
+}
+
+/* Navegação centralizada */
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+nav a {
+  text-decoration: none; /* Remove sublinhado */
+  color: #ffd700; /* Cor do texto */
+  font-size: 1.2em; /* Tamanho do texto */
+  transition: color 0.3s; /* Transição suave para a mudança de cor */
+}
+
+nav a:hover {
+  color: #ffc107; /* Cor ao passar o mouse */
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 60px;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  background-color: rgb(39, 43, 53);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 23px;
+  font-family: "Century Gothic", Arial, sans-serif;
+}
+
+/* ==================== */
+/* Estilos para o conteúdo principal */
+/* ==================== */
+main {
+  margin-top: 150px;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.content h2 {
+  margin-bottom: 20px;
+}
+
+.content nav {
+  margin-bottom: 40px;
+}
+
+.content ul {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+}
+
+.content ul li {
+  margin: 0 20px;
+}
+
+.content ul li a {
+  transition: color 0.3s; /* Transição suave para a mudança de cor */
+}
+
+.content ul li a:hover {
+  color: #ffc107; /* Cor ao passar o mouse */
+}
+
+.content h2 {
+  font-size: 3em;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-top: 30px;
+}
+
+/* ==================== */
+/* Estilos para a galeria de imagens */
+/* ==================== */
+.image-gallery {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  position: relative;
+  top: 30%;
+  width: 100%;
+  padding: 30px;
+}
+
+.image-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+}
+
+.image-item img {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-top: -170px;
+}
+
+/* ==================== */
+/* Adicionando o estilo para os textos nos quadrados */
+/* ==================== */
+.image-item p {
+  margin-top: 10px;
+  font-size: 20px;
+  background-color: rgb(39, 43, 53);
+  color: white;
+  padding: 15px;
+  border-radius: 50px;
+  display: inline-block;
+  width: 180px;
+  text-align: center;
+}
+
+.mission-links li a {
+  margin-top: 10px;
+  font-size: 20px;
+  background-color: rgb(39, 43, 53);
+  color: white;
+  padding: 15px;
+  border-radius: 50px;
+  display: inline-block;
+  width: 180px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.image-item a {
+  text-decoration: none;
+  color: white;
+}
+
+/* ==================== */
+/* Estilos para responsividade */
+/* ==================== */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  main {
+    margin-top: 100px;
+  }
+
+  .image-gallery {
+    flex-direction: column;
+  }
+
+  .image-item img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .image-item p {
+    width: 120px;
+  }
+}

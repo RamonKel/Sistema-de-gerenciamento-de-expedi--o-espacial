@@ -2,7 +2,7 @@ from app.modelos.database import db
 
 class Missoes(db.Model):
   __tablename__="missao"
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(db.Integer, unique=True, primary_key=True)
   nome_missao = db.Column(db.String(50), nullable=False)
   data_lancamento = db.Column(db.Date, nullable=False)
   destino = db.Column(db.String(30), nullable=False)

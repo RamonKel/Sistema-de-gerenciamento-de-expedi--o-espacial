@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, flash, redirect, url_for, Blueprint, jsonify
+from flask import render_template, request, flash, redirect, url_for
 from app.modelos.database import db
 from app.modelos.models import Missoes
 from flask_migrate import Migrate
@@ -13,57 +13,76 @@ def index():
 
 @app.route('/missao/adicionar', methods=['GET', 'POST'])
 def adicionar_missao():
-  if request.method == 'POST':
-    nome_missao = request.form['nome_missao']
-    data_lancamento = request.form['data_lancamento']
-    destino = request.form['destino']
-    estado_missao = request.form['estado_missao']
-    tripulacao = request.form['tripulacao']
-    carga_util = request.form['carga_util']
-    duracao_missao = request.form['duracao_missao']
-    try:
-      custo_missao = float(request.form['custo_missao'])
-    except ValueError:
-      flash('Digite um valor válido')
-      return redirect(url_for('adicionar_missao'))
-    
-    status_missao= request.form['status_missao']
-    
-    nova_missao = Missoes(nome_missao, datetime.strptime(data_lancamento, '%Y-%m-%d'), destino, estado_missao, tripulacao, carga_util, duracao_missao, custo_missao, status_missao)
-    db.session.add(nova_missao)
-    db.session.commit()
-    flash('Missão adicionada com sucesso!')
-    return redirect(url_for('visualizar_missao'))
-  
+  try:
+    if request.method == 'POST':
+      nome_missao = request.form['nome_missao']
+      data_lancamento = request.form['data_lancamento']
+      destino = request.form['destino']
+      estado_missao = request.form['estado_missao']
+      tripulacao = request.form['tripulacao']
+      carga_util = request.form['carga_util']
+      duracao_missao = request.form['duracao_missao']
+      try:
+        custo_missao = float(request.form['custo_missao'])
+      except ValueError:
+        flash('Digite um valor válido')
+        return redirect(url_for('adicionar_missao'))
+      
+      status_missao= request.form['status_missao']
+      
+      nova_missao = Missoes(nome_missao, datetime.strptime(data_lancamento, '%Y-%m-%d'), destino, estado_missao, tripulacao, carga_util, duracao_missao, custo_missao, status_missao)
+      db.session.add(nova_missao)
+      db.session.commit()
+      flash('Missão adicionada com sucesso!')
+      return redirect(url_for('visualizar_missao'))
+  except ValueError as ve:
+            flash('Erro: {}'.format(str(ve)))
+            return redirect(url_for('adicionar_missao'))
+  except Exception as e:
+            db.session.rollback() 
+            flash('Erro ao adicionar missão: {}'.format(str(e)))
+            return redirect(url_for('adicionar_missao'))  
   return render_template("adicionar_missao.html")
 
 
-@app.route('/missao/editar/<int:id>', methods=['PUT', 'POST'])
+@app.route('/missao/editar/<int:id>', methods=['GET', 'POST'])
 def editar_missao(id):
   missao = Missoes.query.get_or_404(id)
-  if request.method == 'POST':
-    missao.nome_missao = request.form['nome_missao']
-    missao.data_lancamento = datetime.strptime(request.form['data_lancamento'], '%Y-%m-%d').date()
-    missao.destino = request.form['destino']
-    missao.estado_missao = request.form['estado_missao']
-    missao.tripulacao = request.form['tripulacao']
-    missao.carga_util = request.form['carga_util']
-    missao.duracao_missao = request.form['duracao_missao']
-    missao.custo_missao = float(request.form['custo_missao'])
-    missao.status_missao = request.form['status_missao']
-    
-    db.session.commit()
-    flash('Missão editada com sucesso!')
-    return redirect(url_for('visualizar_missao'))
+  try:
+    if request.method == 'POST':
+      missao.nome_missao = request.form['nome_missao']
+      missao.data_lancamento = datetime.strptime(request.form['data_lancamento'], '%Y-%m-%d').date()
+      missao.destino = request.form['destino']
+      missao.estado_missao = request.form['estado_missao']
+      missao.tripulacao = request.form['tripulacao']
+      missao.carga_util = request.form['carga_util']
+      missao.duracao_missao = request.form['duracao_missao']
+      missao.custo_missao = float(request.form['custo_missao'])
+      missao.status_missao = request.form['status_missao']
+      
+      db.session.commit()
+      flash('Missão editada com sucesso!')
+      return redirect(url_for('visualizar_missao'))
+  except ValueError as ve:
+            flash('Erro: {}'.format(str(ve)))
+            return redirect(url_for('editar_missao', id=id))
+  except Exception as e:
+            db.session.rollback()
+            flash('Erro ao editar missão: {}'.format(str(e)))
+            return redirect(url_for('editar_missao', id=id))
   
   return render_template("editar_missao.html", missao=missao)
   
-@app.route('/missao/deletar/<int:id>', methods=['DELETE'])
+@app.route('/missao/deletar/<int:id>', methods=['GET','POST'])
 def deletar_missao(id):
   missao = Missoes.query.get_or_404(id)
-  db.session.delete(missao)
-  db.session.commit()
-  flash('Missão deletada com sucesso!')
+  try:
+    db.session.delete(missao)
+    db.session.commit()
+    flash('Missão deletada com sucesso!')
+  except Exception as e:
+        db.session.rollback()
+        flash('Erro ao deletar missão: {}'.format(str(e)))
   return redirect(url_for('visualizar_missao'))
 
 @app.route('/missao', methods=['GET'])
@@ -81,9 +100,20 @@ def pesquisar_missao():
   data_inicial = request.args.get('data_inicial')
   data_final = request.args.get('data_final')
   
-  missoes = Missoes.query.filter(
-    Missoes.data_lancamento >= datetime.strptime(data_inicial, '%Y-%m-%d'),
-    Missoes.data_lancamento <= datetime.strptime(data_final, '%Y-%m-%d')
-  ).order_by(Missoes.data_lancamento.desc()).all()
+  if not data_inicial or not data_final:
+    flash('Por favor, informe as datas inicial e final.')
+    return redirect(url_for('visualizar_missao'))
+  try:
+    missoes = Missoes.query.filter(
+      Missoes.data_lancamento >= datetime.strptime(data_inicial, '%Y-%m-%d'),
+      Missoes.data_lancamento <= datetime.strptime(data_final, '%Y-%m-%d')
+    ).order_by(Missoes.data_lancamento.desc()).all()
+  except Exception as e:
+        flash('Erro ao buscar missões: {}'.format(str(e)))
+        return redirect(url_for('visualizar_missao'))
   
   return render_template('visualizar_missao.html', missoes=missoes)
+
+@app.route('/sobre')
+def sobre():
+    return render_template("sobre.html")

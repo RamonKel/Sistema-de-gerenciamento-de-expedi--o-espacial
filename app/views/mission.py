@@ -14,13 +14,19 @@ def index():
 def adicionar_missao():
   try:
     data = request.get_json()
+  
+    required_fields = ['nome_missao', 'data_lancamento', 'destino', 'estado_missao', 'tripulacao', 'carga_util', 'duracao_missao', 'custo_missao', 'status_missao']
+    missing_fields = [field for field in required_fields if field not in data]
+    if missing_fields:
+      return jsonify({'error': f'Campos Obrigatórios ausentes: {", ".join(missing_fields)}'}), 400
+    
     nova_missao = Missoes(
       nome_missao=data['nome_missao'],
       data_lancamento=datetime.strptime(data['data_lancamento'], '%Y-%m-%d'),
       destino=data['destino'],
       estado_missao=data['estado_missao'],
       tripulacao=data['tripulacao'],
-      carga_util=data['tripulacao'],
+      carga_util=data['carga_util'],
       duracao_missao=data['duracao_missao'],
       custo_missao=data['custo_missao'],
       status_missao=data['status_missao']
@@ -39,6 +45,12 @@ def editar_missao(id):
     if request.method == 'PUT':  
       data = request.get_json()
       
+      required_fields = ['nome_missao', 'data_lancamento', 'destino', 'estado_missao', 'tripulacao', 'carga_util', 'duracao_missao', 'custo_missao', 'status_missao']
+      missing_fields = [field for field in required_fields if field not in data]
+      
+      if missing_fields:
+        return jsonify({'error': f'Campos Obrigatórios ausentes: {", ".join(missing_fields)}'}), 400
+      
       missao.nome_missao=data['nome_missao']
       missao.data_lancamento=datetime.strptime(data['data_lancamento'], '%Y-%m-%d')
       missao.destino=data['destino']
@@ -50,7 +62,7 @@ def editar_missao(id):
       missao.status_missao=data['status_missao']
       
       db.session.commit()
-      return jsonify({'message': 'Missão atualizada com sucesso!', 'missao': missao.to_dict()})
+      return jsonify({'message': 'Missão atualizada com sucesso!', 'missao': missao.to_dict()}), 200
       
     return jsonify(missao.to_dict()), 200
   except Exception as e:
@@ -60,10 +72,9 @@ def editar_missao(id):
 def deletar_missao(id):
   try:
     missao = Missoes.query.get_or_404(id)
-    if request.method == 'PUT':  
-      data = request.get_json()
-      db.session.delete(missao)
-      db.session.commit()
+
+    db.session.delete(missao)
+    db.session.commit()
     
     return jsonify({'message': 'Missao deletada com sucesso!'}), 200
   except Exception as e:
@@ -79,11 +90,8 @@ def visualizar_missao():
 
 @app.route('/missao/<int:id>', methods=['GET'])
 def detalhes_missao(id):
-  try:
     missao = Missoes.query.get_or_404(id)
-    return jsonify(missao.to_dict())
-  except Exception as e:
-      return jsonify({"error": str(e)}), 500
+    return jsonify(missao.to_dict()), 200
 
 @app.route('/missao/pesquisar', methods=['GET'])
 def pesquisar_missao():
@@ -94,11 +102,17 @@ def pesquisar_missao():
     if not data_final or not data_inicial:
       return jsonify({'error': 'As datas inicial e final são obrigatórias!'}), 400
     
+    try:
+      data_inicial = datetime.strptime(data_inicial, '%Y-%m-%d')
+      data_final = datetime.strptime(data_final, '%Y-%m-%d')
+    except:
+      return jsonify({'error': 'O formato das datas deve ser YYYY-MM-DD.'}), 400
+    
     missoes = Missoes.query.filter(
-      Missoes.data_lancamento >= datetime.strptime(data_inicial, '%Y-%m-%d'),
-      Missoes.data_lancamento <= datetime.strptime(data_final, '%Y-%m-%d')
+      Missoes.data_lancamento >= data_inicial,
+      Missoes.data_lancamento <= data_final
     ).order_by(Missoes.data_lancamento.desc()).all()
     
-    return jsonify([missao.to_dict() for missao in missoes])
+    return jsonify([missao.to_dict() for missao in missoes]), 200
   except Exception as e:
       return jsonify({"error": str(e)}), 500

@@ -1,0 +1,73 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    font-family: 'Century Gothic', Arial, sans-serif;
+}
+
+body {
+    background-image: url('/static/dados1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(255, 255, 255);
+    padding-top: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+input,
+textarea,
+button {
+    font-size: 1.2em;
+    padding: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+}
+
+button {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: gray;
+}
+
+.voltar-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.voltar-button:hover {
+    background-color: gray;
+}

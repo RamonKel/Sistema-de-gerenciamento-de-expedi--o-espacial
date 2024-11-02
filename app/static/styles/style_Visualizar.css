@@ -1,0 +1,48 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* Mudei de center para flex-start */
+  align-items: center;
+  text-align: center;
+  font-family: "Century Gothic", Arial, sans-serif;
+}
+
+body {
+  background-image: url("/static/vizualizar1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: black;
+  padding-top: 40px;
+}
+
+body a {
+  text-decoration: none;
+}
+
+/* Estilização da tabela */
+table {
+  border-collapse: collapse;
+  width: 95%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Destaque para linhas selecionadas */
+tr:hover {
+  background-color: #ddd;
+}

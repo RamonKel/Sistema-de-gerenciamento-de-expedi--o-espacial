@@ -4,16 +4,91 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="../static/styles/styles.css" />
+    <title>Sistema de gerenciamento espacial</title>
+    <link rel="shortcut icon" href="./static/ico.png" type="image/x-icon" />
   </head>
+
   <body>
-    <h1>HOMEPAGE</h1>
-    <nav>Menu</nav>
-    <ul>
-      <li>
-        <a href="/missao/adicionar">Adicionar missão</a><br />
-        <a href="/missao">Visualizar missão</a><br />
-      </li>
-    </ul>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <img src="..\static\ico.png" alt="Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/missao/adicionar">Criar</a></li>
+          <li><a href="/missao">Visualizar</a></li>
+          <li>
+            <a href="javascript:void(0);" onclick="abrirJanelaSobre()">Sobre</a>
+          </li>
+          <li><a href="#" onclick="abrirJanela()">Contato</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Div que cobre a tela -->
+    <div class="full-screen-background"></div>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+      <h2>Comande Sua Próxima Missão!</h2>
+      <nav>Planeje cada etapa da sua missão espacial</nav>
+      <ul class="mission-links">
+        <li><a href="/missao/adicionar">Adicionar missão</a></li>
+        <li><a href="/missao">Visualizar missão</a></li>
+      </ul>
+    </div>
+
+    <div class="image-gallery">
+      <div class="image-item">
+        <a href="/missao/adicionar">
+          <img
+            src="{{ url_for('static', filename='icone1.png') }}"
+            alt="Imagem 1"
+          />
+          <p>VER MAIS</p>
+        </a>
+      </div>
+      <div class="image-item">
+        <a href="/missao">
+          <img
+            src="{{ url_for('static', filename='icone2.png') }}"
+            alt="Imagem 2"
+          />
+          <p>VER MAIS</p>
+        </a>
+      </div>
+      <div class="image-item">
+        <a href="/missao">
+          <img
+            src="{{ url_for('static', filename='icone3.png') }}"
+            alt="Imagem 3"
+          />
+          <p>VER MAIS</p>
+        </a>
+      </div>
+      <div class="image-item">
+        <a href="javascript:void(0);" onclick="abrirJanelaSobre()">
+          <img
+            src="{{ url_for('static', filename='icone4.png') }}"
+            alt="Imagem 4"
+          />
+          <p>VER MAIS</p>
+        </a>
+      </div>
+    </div>
+    <script>
+      function abrirJanela() {
+        window.open(
+          "https://maps.app.goo.gl/pz9t1R1hZjNMv8dT9",
+          "Contato",
+          "width=700,height=600"
+        );
+      }
+      function abrirJanelaSobre() {
+        window.open("/sobre", "sobre", "width=700,height=600");
+      }
+    </script>
   </body>
 </html>
